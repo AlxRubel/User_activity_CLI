@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -44,4 +45,16 @@ func main() {
 	fmt.Println("User events:")
 
 	fmt.Print(string(body))
+
+	fmt.Print("\n\n\n")
+	fmt.Println("Unmarshal")
+	events := []Event{}
+	err = json.Unmarshal(body, &events)
+	if err != nil {
+		panic(err)
+	}
+
+	for i := 0; i < len(events); i++ {
+		fmt.Println(events[i].humanReadable())
+	}
 }
